@@ -1,71 +1,79 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Test Vercel App</title>
+  <title>Test Vercel</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: #0a0a0a;
-      color: #ededed;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      color: #fff;
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
     }
-    .container {
+    .card {
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 3rem;
       text-align: center;
-      padding: 2rem;
+      max-width: 500px;
     }
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
+    h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+    .subtitle { color: #aaa; margin-bottom: 2rem; }
+    .time-box {
+      background: rgba(0,0,0,0.3);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
     }
-    p { color: #888; margin-bottom: 2rem; }
-    .btn {
-      background: #fff;
+    .time { font-size: 3rem; font-weight: bold; font-family: monospace; }
+    .date { color: #aaa; margin-top: 0.5rem; }
+    .status {
+      display: inline-block;
+      background: #00c853;
       color: #000;
-      border: none;
-      padding: 0.75rem 1.5rem;
-      border-radius: 8px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: opacity 0.2s;
+      padding: 0.5rem 1.5rem;
+      border-radius: 50px;
+      font-weight: bold;
+      font-size: 0.9rem;
     }
-    .btn:hover { opacity: 0.8; }
-    #result {
+    .info {
       margin-top: 1.5rem;
-      padding: 1rem;
-      background: #1a1a1a;
-      border-radius: 8px;
-      display: none;
-      font-family: monospace;
-      color: #0f0;
+      color: #888;
+      font-size: 0.85rem;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Test Vercel App</h1>
-    <p>Simple Node.js app deployed on Vercel</p>
-    <button class="btn" onclick="callApi()">Call API</button>
-    <div id="result"></div>
+  <div class="card">
+    <h1>Hello Vercel!</h1>
+    <p class="subtitle">Static website deployed successfully</p>
+    <div class="time-box">
+      <div class="time" id="clock">--:--:--</div>
+      <div class="date" id="date">Loading...</div>
+    </div>
+    <span class="status">DEPLOYED</span>
+    <p class="info">Pure HTML/CSS/JS - No framework needed</p>
   </div>
+
   <script>
-    async function callApi() {
-      const el = document.getElementById('result');
-      el.style.display = 'block';
-      el.textContent = 'Loading...';
-      try {
-        const res = await fetch('/api/hello');
-        const data = await res.json();
-        el.textContent = JSON.stringify(data, null, 2);
-      } catch (err) {
-        el.textContent = 'Error: ' + err.message;
-      }
+    function updateClock() {
+      const now = new Date();
+      document.getElementById('clock').textContent =
+        now.toLocaleTimeString('th-TH', { hour12: false });
+      document.getElementById('date').textContent =
+        now.toLocaleDateString('th-TH', {
+          weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+        });
     }
+    updateClock();
+    setInterval(updateClock, 1000);
   </script>
 </body>
 </html>
